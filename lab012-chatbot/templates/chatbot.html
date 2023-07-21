@@ -1,0 +1,180 @@
+<!-- Copyright 2023 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #chatlog {
+            width: 80%;
+            max-height: 60vh;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .user-message {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .user-bubble {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .bot-message {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .bot-bubble {
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .bot-icon {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-left: 5px;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function sendMessage() {
+        var message = $('#message').val();
+        $('#message').val('');
+        $('#chatlog').append('<div class="user-message"><div class="user-bubble">' + message + '</div></div>');
+        $('#chatlog').append('<div class="bot-message"><div class="bot-bubble"><i class="fas fa-robot bot-icon"></i><span class="loader"></span></div></div>');
+        $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+        $('.loader').show();
+        $.ajax({
+            type: 'POST',
+            url: '/get_response',
+            data: { message: message },
+            success: function (data) {
+                var response = data.response;
+                setTimeout(function () {
+                    $('.loader').hide();
+                    $('#chatlog .bot-message:last-child .bot-bubble').html('<i class="fas fa-robot bot-icon"></i> ' + response);
+                }, 1000);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#message').keypress(function (e) {
+            if (e.which == 13) {
+                sendMessage();
+            }
+        });
+    });
+</script>
+
+<body>
+    <div class="container">
+        <h1>Chatbot</h1>
+        <h4>The chatbot answers questions about the VIAI Edge solution, ask questions like:</h4>
+        <div>GCP Services:
+            <li>Vertex AI Matching Engine</li>
+        </div>
+        <div>Examples:</div>
+        <div>
+            <li>Who created this solution ?</li>
+            <li>What does the solution do ?</li>
+            <li>How many deploy options does the solution provide ?</li>
+            <li>How do I deploy the solution to a GCE VM ?</li>
+        </div>
+        <br />
+        <div id="chatlog"></div>
+        <div class="row">
+            <div class="col">
+                <input type="text" id="message" class="form-control" placeholder="Type your message">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

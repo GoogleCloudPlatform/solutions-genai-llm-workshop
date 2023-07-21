@@ -1,0 +1,53 @@
+langchain==0.0.205
+transformers
+pandas
+datasets
+google-api-python-client
+vertexai
+
+# chromadb==0.3.21
+pypdf
+faiss-cpu
+pydantic
+
+# LLM-IMDB
+networkx
+fastapi
+rich
+google-search-results
+uvicorn
+
+httpx
+requests
+
+# CSV Loader
+tabulate
+
+# BQ Tools
+db-dtypes
+
+# Workshop Lab022
+google-cloud-aiplatform==1.26.0
+shapely<2.0.
+protobuf
+tensorflow_hub
+tensorflow_text
+
+# Selenium URL Loader
+selenium
+unstructured
+
+# Web Loader
+bs4
+pytesseract
+
+# fix mypy linting error
+requests
+types-requests
+types-protobuf
+
+# SQL Agent
+
+SQLAlchemy==1.4.48
+sqlalchemy-bigquery
+python-bigquery-validator

@@ -1,0 +1,28 @@
+# Flask
+Flask==2.3.2
+
+# Langchain / LLM
+langchain==0.0.205
+transformers==4.28.1
+pandas==1.5.3
+datasets==2.11.0
+google-api-python-client==2.86.0
+pypdf==3.8.1
+faiss-cpu==1.7.4
+pydantic==1.10.7
+# Chatbot
+google-cloud-aiplatform==1.25.0
+shapely<2.0.
+protobuf==3.20.3
+tensorflow_hub==0.13.0
+tensorflow_text==2.12.1
+
+vertexai==0.0.1
+# google-cloud-logging==3.5.0
+# Dataframe
+db-dtypes==1.1.1
+
+# fix mypy linting error
+requests==2.28.0
+types-requests==2.31.0.1
+types-protobuf==4.23.0.1
