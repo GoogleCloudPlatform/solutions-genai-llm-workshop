@@ -30,7 +30,7 @@ Vertex AI Initialize
 
 
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
-REGION = os.getenv("GOOGLE_CLOUD_REGIN")
+REGION = os.getenv("GOOGLE_CLOUD_REGION")
 vertexai.init(project=PROJECT_ID, location=REGION)
 
 llm = VertexAI(temperature=0.2, top_p=1, top_k=40, max_output_tokens=1024)
