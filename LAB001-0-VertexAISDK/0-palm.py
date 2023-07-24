@@ -21,8 +21,11 @@ REGION = os.getenv("GOOGLE_CLOUD_REGIN")
 vertexai.init(project=PROJECT_ID, location=REGION)
 t = TextGenerationModel.from_pretrained(model_name="text-bison")
 
-print("* hi, what's your name?")
-print(t.predict("hi, what's your name?"))
+print("* hi, what's your name ?")
+print(t.predict("hi, what's your name ?"))
+
+print("* 天空為什麼是藍色的 ?")
+print(t.predict("天空為什麼是藍色的 ?"))
 
 print("* apples are red, banana is:")
 print(t.predict("apples are red, banana is:"))
