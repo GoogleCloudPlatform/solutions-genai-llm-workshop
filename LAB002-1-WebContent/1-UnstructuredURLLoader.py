@@ -21,9 +21,7 @@ urls = ["https://tw.news.yahoo.com/%E5%8F%AA%E6%8E%A5%E5%BE%85%E5%8F%B0%E7%81%A3
 
 loader = UnstructuredURLLoader(urls=urls)
 documents = loader.load_and_split()
-print("===>>>")
-print(documents)
-print("===<<<")
+
 query = "簡單總結一下這個新聞"
 chain = load_qa_chain(llm=llm, chain_type="stuff", verbose=True)
 answer = chain.run(input_documents=documents, question=query)
