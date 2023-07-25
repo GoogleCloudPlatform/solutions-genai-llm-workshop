@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from langchain.chains.question_answering import load_qa_chain
-from langchain.document_loaders import UnstructuredURLLoader
+from langchain.document_loaders import WebBaseLoader
 from langchain.llms.vertexai import VertexAI
 
 llm = VertexAI(temperature=0.2)
 
-urls = ["https://cloud.google.com/solutions#industry-solutions"]
-loader = UnstructuredURLLoader(urls=urls)
+urls = ["https://www.blog.google/products/bard/google-bard-new-features-update-july-2023/"]
+loader = WebBaseLoader(urls)
 documents = loader.load_and_split()
 
-query = "list all Google Cloud Industry solutions"
+query = "give me a 500 words summary"
 chain = load_qa_chain(llm=llm, chain_type="stuff", verbose=True)
 answer = chain.run(input_documents=documents, question=query)
 print(answer)
