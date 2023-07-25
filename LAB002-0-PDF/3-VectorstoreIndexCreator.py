@@ -36,8 +36,8 @@ embeddings = MyVertexAIEmbedding()
 
 index_name = "state_of_union"
 
-PDF_FILE = f"../dataset/unstructured/{index_name}.txt"
-loader = TextLoader(f"../dataset/unstructured/{index_name}.txt")
+TXT_FILE = f"../dataset/unstructured/{index_name}.txt"
+loader = TextLoader(TXT_FILE)
 documents = loader.load()
 
 
