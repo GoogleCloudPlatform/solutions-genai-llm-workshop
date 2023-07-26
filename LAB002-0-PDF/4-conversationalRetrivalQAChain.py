@@ -47,17 +47,17 @@ qa = ConversationalRetrievalChain.from_llm(
 )
 
 chat_history: List[Tuple[str, str]] = []
-query = "list the names he mentioned in the statement"
+query = "who is Justice Breyer"
 result = qa({"question": query, "chat_history": chat_history}, return_only_outputs=True)
 print(result["answer"])
 chat_history = [(query, result["answer"])]
 
-query = "who is the first in these names ?"
+query = "what did the president said about him ?"
 result = qa({"question": query, "chat_history": chat_history}, return_only_outputs=True)
 print(result["answer"])
 chat_history.append((query, result["answer"]))
 
-query = "what happened to him ?"
+query = "what does he do now ?"
 result = qa({"question": query, "chat_history": chat_history}, return_only_outputs=True)
 print(result["answer"])
 chat_history.append((query, result["answer"]))
