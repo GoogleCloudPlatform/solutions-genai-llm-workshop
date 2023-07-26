@@ -17,12 +17,12 @@ from langchain.llms.vertexai import VertexAI
 
 llm = VertexAI(temperature=0.2, max_output_tokens=1024)
 
-urls = ["https://zh.wikipedia.org/wiki/Bard_(%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA)"]
+urls = ["https://taiwan.googleblog.com/"]
 
 loader = UnstructuredURLLoader(urls=urls)
 documents = loader.load_and_split()
 
-query = "請用300字簡單描述Bard的發展"
+query = "500字總結一下這篇文章"
 chain = load_qa_chain(llm=llm, chain_type="stuff", verbose=True)
 answer = chain.run(input_documents=documents, question=query)
 print(answer)

@@ -17,11 +17,12 @@ from langchain.llms.vertexai import VertexAI
 
 llm = VertexAI(temperature=0.2)
 
-urls = ["https://www.blog.google/products/bard/google-bard-new-features-update-july-2023/"]
+urls = ["https://taiwan.googleblog.com/"]
+
 loader = WebBaseLoader(urls)
 documents = loader.load_and_split()
 
-query = "give me a 500 words summary"
+query = "500字總結一下這篇文章"
 chain = load_qa_chain(llm=llm, chain_type="stuff", verbose=True)
 answer = chain.run(input_documents=documents, question=query)
 print(answer)
