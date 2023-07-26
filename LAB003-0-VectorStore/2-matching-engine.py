@@ -67,7 +67,7 @@ print("Creating Chain...")
 
 qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
 
-query = "Who created the VIAI Edge solution??"
+query = "What does the solution do ?"
 print("Sending Question:{}".format(query))
 result = qa({"query": query})
 print(result["result"])
