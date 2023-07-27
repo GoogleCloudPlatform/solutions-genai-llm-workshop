@@ -17,7 +17,7 @@ from langchain.llms.vertexai import VertexAI
 
 llm = VertexAI(temperature=0.2)
 
-urls = ["https://www.blog.google/products/bard/google-bard-new-features-update-july-2023/"]
+urls = ["https://cloud.google.com/blog/topics/google-cloud-next/cloud-next-2023-session-catalog-is-live"]
 loader = WebBaseLoader(urls)
 documents = loader.load_and_split()
 
