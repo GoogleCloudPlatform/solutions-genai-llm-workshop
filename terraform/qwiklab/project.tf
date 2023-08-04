@@ -22,7 +22,8 @@ resource "google_project_service" "google-cloud-apis" {
     "servicenetworking.googleapis.com",
     "compute.googleapis.com",
     "bigquery.googleapis.com",
-    "run.googleapis.com"
+    "run.googleapis.com",
+    "notebooks.googleapis.com"
   ])
   disable_dependent_services = true
   disable_on_destroy         = true
