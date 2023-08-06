@@ -4,6 +4,7 @@ pandas
 datasets
 google-api-python-client
 vertexai
+litellm
 
 # chromadb==0.3.21
 pypdf
