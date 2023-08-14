@@ -1,4 +1,4 @@
-langchain==0.0.205
+langchain==0.0.259
 transformers
 pandas
 datasets
@@ -6,7 +6,7 @@ google-api-python-client
 vertexai
 
 # chromadb==0.3.21
-pypdf
+pypdf>=3.9.0
 faiss-cpu
 pydantic
 
@@ -18,7 +18,7 @@ google-search-results
 uvicorn
 
 httpx
-requests
+requests>=2.31.0
 
 # CSV Loader
 tabulate
@@ -51,3 +51,7 @@ types-protobuf
 SQLAlchemy==1.4.48
 sqlalchemy-bigquery
 python-bigquery-validator
+
+certifi>=2023.07.22
+aiohttp>=3.8.5
+cryptography>=41.0.3

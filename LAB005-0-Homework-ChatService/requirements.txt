@@ -2,7 +2,7 @@
 Flask==2.3.2
 
 # Langchain / LLM
-langchain==0.0.205
+langchain==0.0.259
 transformers==4.28.1
 pandas==1.5.3
 datasets==2.11.0
