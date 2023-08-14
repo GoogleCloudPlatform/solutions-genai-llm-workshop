@@ -23,7 +23,7 @@ def do_predict(query: str) -> str:
     import requests
 
     response = requests.post(
-        f"{request.scheme}://{request.host}/predict?model=web_search", json=query
+        f"{request.scheme}://{request.host}/predict?model=web_search", json=query, allow_redirects=False
     )
 
     if response.status_code == 200:
