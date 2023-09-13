@@ -19,6 +19,7 @@ resource "google_project_service" "google-cloud-apis" {
   project = var.gcp_project_id
   for_each = toset([
     "aiplatform.googleapis.com",
+    "appengine.googleapis.com",
     "bigquery.googleapis.com",
     "cloudbuild.googleapis.com",
     "cloudfunctions.googleapis.com",

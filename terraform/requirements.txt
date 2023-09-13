@@ -1,0 +1,12 @@
+cloud-sql-python-connector[pg8000]
+SQLAlchemy==2.0.7
+langchain==0.0.259
+google-cloud-aiplatform>=1.26.1
+argparse
+psycopg2
+pgvector
+unstructured
+tensorflow-hub
+tensorflow
+tensorflow_text
+google-cloud-secret-manager

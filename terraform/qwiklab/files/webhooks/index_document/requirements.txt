@@ -8,4 +8,4 @@ pgvector
 psycopg2
 unstructured[all-docs]
 pypdf
-# google-cloud-secret-manager
+google-cloud-secret-manager

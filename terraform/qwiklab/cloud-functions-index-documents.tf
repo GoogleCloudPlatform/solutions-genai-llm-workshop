@@ -45,10 +45,12 @@ resource "google_cloudfunctions2_function" "index_document" {
     ingress_settings               = "ALLOW_ALL"
     all_traffic_on_latest_revision = true
     service_account_email          = "${var.gcp_project_id}@appspot.gserviceaccount.com"
+    vpc_connector_egress_settings  = "PRIVATE_RANGES_ONLY"
     vpc_connector                  = google_vpc_access_connector.connector.id
   }
 
   event_trigger {
+    retry_policy          = "RETRY_POLICY_RETRY"
     trigger_region        = var.gcp_region
     event_type            = "google.cloud.storage.object.v1.finalized"
     service_account_email = "${var.gcp_project_id}@appspot.gserviceaccount.com"
