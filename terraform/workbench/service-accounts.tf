@@ -17,6 +17,11 @@ locals {
   default_compute_engine_svc_account_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
+resource "google_service_account" "app_service_account" {
+  account_id   = "app-service-account"
+  display_name = "Application Service Account"
+}
+
 resource "google_project_service_identity" "dialogflow_serviceAgent" {
   provider = google-beta
 
@@ -87,7 +92,7 @@ resource "google_project_iam_member" "bucket_upload_trigger" {
     "roles/secretmanager.secretAccessor",
   ])
   role   = each.key
-  member = "serviceAccount:${var.gcp_project_id}@appspot.gserviceaccount.com"
+  member = "serviceAccount:${google_service_account.app_service_account.email}"
   depends_on = [
     google_project_service.google-cloud-apis,
   ]

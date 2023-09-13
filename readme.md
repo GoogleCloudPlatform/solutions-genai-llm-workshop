@@ -32,9 +32,9 @@ Ensure the following services are enabled in your GCP Project:
 - create `terraform.tfvars` file with the following content
 
     ```ini
-    gcp_project_id = <YOUR GCP PROJECT ID>
-    gcp_region = <DEFAULT GCP PROJECT ID> 
-    gcp_zone = <DEFAULT GCP PROJECT ID> 
+    gcp_project_id=<YOUR GCP PROJECT ID>
+    gcp_region=<DEFAULT GCP PROJECT ID> 
+    gcp_zone=<DEFAULT GCP PROJECT ID> 
     ```
 
 - Apply terraform to privision Google Cloud Resources.

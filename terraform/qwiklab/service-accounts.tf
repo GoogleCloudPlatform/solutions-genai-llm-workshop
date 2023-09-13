@@ -87,7 +87,7 @@ resource "google_project_iam_member" "bucket_upload_trigger" {
     "roles/secretmanager.secretAccessor",
   ])
   role   = each.key
-  member = "serviceAccount:${var.gcp_project_id}@appspot.gserviceaccount.com"
+  member = "serviceAccount:${google_service_account.app_service_account.email}"
   depends_on = [
     google_project_service.google-cloud-apis,
   ]
