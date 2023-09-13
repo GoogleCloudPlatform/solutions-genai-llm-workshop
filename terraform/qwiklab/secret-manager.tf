@@ -23,4 +23,8 @@ module "secret-manager" {
       secret_data           = random_password.password.result
     },
   ]
+
+  depends_on = [
+    google_project_service.google-cloud-apis
+  ]
 }

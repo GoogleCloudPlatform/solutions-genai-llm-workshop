@@ -19,11 +19,23 @@ resource "google_project_service" "google-cloud-apis" {
   project = var.gcp_project_id
   for_each = toset([
     "aiplatform.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "compute.googleapis.com",
     "bigquery.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudkms.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    "eventarc.googleapis.com",
+    "language.googleapis.com",
+    "logging.googleapis.com",
+    "pubsub.googleapis.com",
     "run.googleapis.com",
-    "notebooks.googleapis.com"
+    "notebooks.googleapis.com",
+    "secretmanager.googleapis.com",
+    "servicenetworking.googleapis.com",
+    "sqladmin.googleapis.com",
+    "storage.googleapis.com",
+    "vpcaccess.googleapis.com"
   ])
   disable_dependent_services = true
   disable_on_destroy         = true

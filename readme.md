@@ -13,6 +13,14 @@ This is part of the JAPAC Generative AI Technical Workshop qwiklabs. The worksho
 
 To manually configure the Google Cloud project:
 
+Ensure the following services are enabled in your GCP Project:
+
+    * Cloud Resource Manager API
+
+    * Compute Engine API
+
+    * Identity and Access Management (IAM) API
+
 2. Use Terraform to create and configure required resources.
 
 - Goto `terraform/qwiklabs` folder.
