@@ -23,14 +23,13 @@ from langchain.schema import AgentAction, AgentFinish
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 
 """
 Create Vertex LLM
 """
 
 REQUESTS_PER_MINUTE = 30
-PROJECT_ID = "cloud-llm-preview3"  # @param {type:"string"}
 
 llm = VertexAI(
     max_output_tokens=1024,
@@ -39,7 +38,7 @@ llm = VertexAI(
     top_k=40,
     verbose=True,
 )
-embeddings = MyVertexAIEmbedding()
+embeddings = VertexAIEmbeddings()
 
 """
 Tools

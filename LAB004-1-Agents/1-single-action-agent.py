@@ -21,7 +21,7 @@ from langchain.llms.vertexai import VertexAI
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 from VertexLLMPrompt import VertexPromptTemplate  # noqa: E402
 from VertexLLMPrompt import VertexLLMOutputParser  # noqa: E402; noqa: E402
 
@@ -36,7 +36,7 @@ llm = VertexAI(
     top_k=40,
     verbose=True,
 )
-embeddings = MyVertexAIEmbedding()
+embeddings = VertexAIEmbeddings()
 
 """
 Load Tools
