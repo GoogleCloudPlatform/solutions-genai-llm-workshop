@@ -47,7 +47,7 @@ table_name = "crimes"
 
 table_uri = f"bigquery://{project_id}/{dataset_id}"
 db = SQLDatabase.from_uri(table_uri)
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+toolkit = SQLDatabaseToolkit(db=db, llm=vertex_llm)
 
 def ask_bq(question):
     agent_executor = create_sql_agent(
@@ -64,9 +64,6 @@ output = ask_bq("what's the top 10 block, type by crime activities")
 
 print(
     f"""
-**********
-intermediate_steps:{steps}
-**********
 result:{result}
 """
 )
