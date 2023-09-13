@@ -36,7 +36,7 @@ toolkit = BigQueryToolKit_CodeBison(
 tools = toolkit.get_tools()
 
 executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True)
-resp = executor.run(
-    "show me top 10 blocks, crimes, arrested cases and not arrested cases by not arrested rate."
-)
+query = "what's the top 10 block, type by crime activities"
+# query = "show me top 10 blocks, crimes, arrested cases and not arrested cases by not arrested rate."
+resp = executor.run(query)
 print(resp)

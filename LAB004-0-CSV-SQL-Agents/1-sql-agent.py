@@ -13,9 +13,11 @@
 # limitations under the License.
 import os
 
+from langchain.agents import create_sql_agent
+from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain_experimental.sql import SQLDatabaseChain
 from langchain.llms.vertexai import VertexAI
-from langchain.utilities import SQLDatabase
+from langchain.sql_database import SQLDatabase
 from sqlalchemy import *  # noqa: F403,F401
 from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *  # noqa: F403, F401
@@ -44,22 +46,21 @@ table_name = "crimes"
 
 
 table_uri = f"bigquery://{project_id}/{dataset_id}"
-engine = create_engine(f"bigquery://{project_id}/{dataset_id}")
-
+db = SQLDatabase.from_uri(table_uri)
+toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 
 def ask_bq(question):
-    db = SQLDatabase(
-        engine=engine, include_tables=[table_name]
+    agent_executor = create_sql_agent(
+        llm=vertex_llm,
+        toolkit=toolkit,
+        verbose=True, 
+        max_execution_time=60,
     )
-    db_chain = SQLDatabaseChain.from_llm(
-        vertex_llm, db, verbose=True, return_intermediate_steps=True
-    )
 
-    output = db_chain(question)
-    return output["result"], output["intermediate_steps"][0]
+    output = agent_executor.run(question)
+    return output
 
-
-result, steps = ask_bq("what's the top 10 block, type by crime activities")
+output = ask_bq("what's the top 10 block, type by crime activities")
 
 print(
     f"""

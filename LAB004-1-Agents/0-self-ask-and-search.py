@@ -19,7 +19,7 @@ from langchain.llms.vertexai import VertexAI
 Create Vertex LLM
 """
 
-llm = VertexAI(max_output_tokens=1024, verbose=True)
+llm = VertexAI(max_output_tokens=1024, verbose=True, temperature=0)
 
 """
 Load Tools

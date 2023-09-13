@@ -49,10 +49,10 @@ types-protobuf
 
 # SQL Agent
 flask-sqlalchemy
-SQLAlchemy
+SQLAlchemy==1.4.48
 sqlalchemy-bigquery
 python-bigquery-validator
-
+pyodbc
 certifi>=2023.07.22
 aiohttp>=3.8.5
 cryptography>=41.0.3

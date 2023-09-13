@@ -15,14 +15,14 @@ import json
 
 from bigquery_validator import BigQueryValidator
 from google.cloud import bigquery
+from langchain.llms import VertexAI
 from langchain.tools.base import BaseTool
 from pydantic import BaseModel, Extra, Field
-from VertexCodeBisonAI import VertexCodeBisonAI
 
 
-class BaseBigQueryTool(BaseModel):
-    """Base tool for interacting with a SQL database."""
-
+class GoogleSQLTool(BaseTool):
+    return_direct = False
+    name = "create_sql_statement"
     db: bigquery.Client = Field(exclude=True)
     dataset: str = Field(exclude=True)
 
@@ -34,10 +34,6 @@ class BaseBigQueryTool(BaseModel):
         arbitrary_types_allowed = True
         extra = Extra.forbid
 
-
-class GoogleSQLTool(BaseBigQueryTool, BaseTool):
-    return_direct = False
-    name = "create_sql_statement"
 
     description = """
     Useful tool to create a GoogleSQL that answers user's question.
@@ -65,13 +61,8 @@ class GoogleSQLTool(BaseBigQueryTool, BaseTool):
     def _run(self, query: str, table_schema: str) -> str:
         print(f"*** query = {query}")
 
-        llm = VertexCodeBisonAI()
-        # prompt = f"""
-        #         given the table schema :
-        #         {table_schema}
-        #         construct a GoogleSQL query statement to answer the question: :{query}
-        #         SQL:
-        #         """
+        llm = VertexAI(model_name="code-bison")
+
         prompt = f"""
 given the table schema :
 
@@ -85,15 +76,26 @@ Remember:
 
 SQL:
 """
-        return llm(prompt)
+        sql = llm(prompt)
+        sql = sql.lstrip("```sql").lstrip("```").rstrip("```")
+        return sql
 
     async def _arun(self, query: str) -> str:
         raise NotImplementedError("QuerySqlDbTool does not support async")
 
 
-class QueryBigQueryTool(BaseBigQueryTool, BaseTool):
+class QueryBigQueryTool(BaseTool):
     """Tool for querying a BigQuery table."""
+    db: bigquery.Client = Field(exclude=True)
+    dataset: str = Field(exclude=True)
 
+    # Override BaseTool.Config to appease mypy
+    # See https://github.com/pydantic/pydantic/issues/4173
+    class Config(BaseTool.Config):
+        """Configuration for this pydantic object."""
+
+        arbitrary_types_allowed = True
+        extra = Extra.forbid
     return_direct = False
     name = "query_bigquery"
     description = """
@@ -123,9 +125,18 @@ class QueryBigQueryTool(BaseBigQueryTool, BaseTool):
         raise NotImplementedError("QuerySqlDbTool does not support async")
 
 
-class InfoBigQueryTool(BaseBigQueryTool, BaseTool):
+class InfoBigQueryTool(BaseTool):
     """Tool for getting metadata about a SQL database."""
+    db: bigquery.Client = Field(exclude=True)
+    dataset: str = Field(exclude=True)
 
+    # Override BaseTool.Config to appease mypy
+    # See https://github.com/pydantic/pydantic/issues/4173
+    class Config(BaseTool.Config):
+        """Configuration for this pydantic object."""
+
+        arbitrary_types_allowed = True
+        extra = Extra.forbid
     name = "schema_bigquery"
     description = """
     Tool for getting metadata about a SQL database.
@@ -167,9 +178,18 @@ WHERE
         raise NotImplementedError("SchemaSqlDbTool does not support async")
 
 
-class ListBigQueryTool(BaseBigQueryTool, BaseTool):
+class ListBigQueryTool(BaseTool):
     """Tool for getting tables names."""
+    db: bigquery.Client = Field(exclude=True)
+    dataset: str = Field(exclude=True)
 
+    # Override BaseTool.Config to appease mypy
+    # See https://github.com/pydantic/pydantic/issues/4173
+    class Config(BaseTool.Config):
+        """Configuration for this pydantic object."""
+
+        arbitrary_types_allowed = True
+        extra = Extra.forbid
     name = "list_tables_bigquery"
     description = """
     Useful Tool to list available tables names.
@@ -186,7 +206,7 @@ class ListBigQueryTool(BaseBigQueryTool, BaseTool):
         raise NotImplementedError("ListTablesSqlDbTool does not support async")
 
 
-class QueryCheckerTool(BaseBigQueryTool, BaseTool):
+class QueryCheckerTool(BaseTool):
     """Use an LLM to validate if a GoogleSQL statement is correct.
     Adapted from https://www.patterns.app/blog/2023/01/18/crunchbot-sql-analyst-gpt/"""
 

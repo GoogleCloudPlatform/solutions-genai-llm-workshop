@@ -118,13 +118,9 @@ In this lab, we use Vertex AI Workbench as the lab environment.
     python3 1-create-and-copy-bq-data.py
     ```
 
-8. Create Vertex Matching Engine, this can take around 60 minutes.
+8. Insdtall `unixodbc`
 
     ```shell
-    curl -L https://tinyurl.com/genai-202307-dataset --output dataset.zip
-    unzip dataset.zip
-    rm dataset.zip
-
-    python3 0-setup-matching-enging.py	
+    sudo apt install unixodbc
     ```
 
