@@ -1,4 +1,5 @@
 langchain
+langchain-experimental
 transformers
 pandas
 datasets

@@ -13,8 +13,9 @@
 # limitations under the License.
 import os
 
-from langchain import SQLDatabase, SQLDatabaseChain
+from langchain_experimental.sql import SQLDatabaseChain
 from langchain.llms.vertexai import VertexAI
+from langchain.utilities import SQLDatabase
 from sqlalchemy import *  # noqa: F403,F401
 from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *  # noqa: F403, F401
@@ -48,9 +49,8 @@ engine = create_engine(f"bigquery://{project_id}/{dataset_id}")
 
 def ask_bq(question):
     db = SQLDatabase(
-        engine=engine, metadata=MetaData(bind=engine), include_tables=[table_name]
+        engine=engine, include_tables=[table_name]
     )
-
     db_chain = SQLDatabaseChain.from_llm(
         vertex_llm, db, verbose=True, return_intermediate_steps=True
     )
