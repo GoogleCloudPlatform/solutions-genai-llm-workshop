@@ -14,7 +14,7 @@
 
 resource "google_cloudfunctions2_function" "index_document" {
   name     = "index_document"
-  location = var.google_default_region
+  location = var.gcp_region
 
   build_config {
     runtime     = "python39"
@@ -31,7 +31,7 @@ resource "google_cloudfunctions2_function" "index_document" {
     available_memory   = "512M"
     timeout_seconds    = 60
     environment_variables = {
-      PROJECT_ID          = var.google_project_id
+      PROJECT_ID          = var.gcp_project_id
       GCS_BUCKET          = module.gcs_documents_storage.name
       DATABASE_NAME       = "postgres"
       DATABASE_IP_ADDRESS = google_sql_database_instance.postgresql.private_ip_address
@@ -44,14 +44,14 @@ resource "google_cloudfunctions2_function" "index_document" {
     }
     ingress_settings               = "ALLOW_ALL"
     all_traffic_on_latest_revision = true
-    service_account_email          = "${var.google_project_id}@appspot.gserviceaccount.com"
+    service_account_email          = "${var.gcp_project_id}@appspot.gserviceaccount.com"
     vpc_connector                  = google_vpc_access_connector.connector.id
   }
 
   event_trigger {
-    trigger_region        = var.google_default_region
+    trigger_region        = var.gcp_region
     event_type            = "google.cloud.storage.object.v1.finalized"
-    service_account_email = "${var.google_project_id}@appspot.gserviceaccount.com"
+    service_account_email = "${var.gcp_project_id}@appspot.gserviceaccount.com"
     event_filters {
       attribute = "bucket"
       value     = module.gcs_documents_storage.name

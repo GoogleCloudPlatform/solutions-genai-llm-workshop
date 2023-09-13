@@ -13,41 +13,41 @@
 # limitations under the License.
 
 module "gcs" {
-  location         = var.google_default_region
-  names            = ["${var.google_project_id}_cloudfunctions_src"]
-  project_id       = var.google_project_id
+  location         = var.gcp_region
+  names            = ["${var.gcp_project_id}_cloudfunctions_src"]
+  project_id       = var.gcp_project_id
   prefix           = ""
   randomize_suffix = true
   source           = "terraform-google-modules/cloud-storage/google"
   version          = "3.4.0"
   force_destroy = {
-    ("${var.google_project_id}_cloudfunctions_src") = true
+    ("${var.gcp_project_id}_cloudfunctions_src") = true
   }
 }
 
 module "gcs_conversationHistory" {
-  location         = var.google_default_region
-  names            = ["${var.google_project_id}_conversations"]
-  project_id       = var.google_project_id
+  location         = var.gcp_region
+  names            = ["${var.gcp_project_id}_conversations"]
+  project_id       = var.gcp_project_id
   prefix           = ""
   randomize_suffix = true
   source           = "terraform-google-modules/cloud-storage/google"
   version          = "3.4.0"
   force_destroy = {
-    ("${var.google_project_id}_conversations") = true
+    ("${var.gcp_project_id}_conversations") = true
   }
 }
 
 module "gcs_documents_storage" {
-  location         = var.google_default_region
-  names            = ["${var.google_project_id}_doc_store"]
-  project_id       = var.google_project_id
+  location         = var.gcp_region
+  names            = ["${var.gcp_project_id}_doc_store"]
+  project_id       = var.gcp_project_id
   prefix           = ""
   randomize_suffix = true
   source           = "terraform-google-modules/cloud-storage/google"
   version          = "3.4.0"
   force_destroy = {
-    ("${var.google_project_id}_doc_store") = true
+    ("${var.gcp_project_id}_doc_store") = true
   }
 }
 

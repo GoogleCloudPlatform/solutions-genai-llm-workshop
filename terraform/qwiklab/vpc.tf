@@ -93,42 +93,9 @@ resource "google_compute_firewall" "allow-healthcheck" {
   ]
 }
 
-resource "google_compute_global_address" "private_ip_alloc" {
-  name          = "private-ip-alloc"
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  prefix_length = 16
-  network       = google_compute_network.llm-vpc.id
-  depends_on = [
-    google_compute_network.llm-vpc
-  ]
-}
-
-# Create a private connection
-resource "google_service_networking_connection" "servicenetworking" {
-  network                 = google_compute_network.llm-vpc.id
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
-  depends_on = [
-    google_compute_network.llm-vpc
-  ]
-}
-
-resource "google_compute_network_peering_routes_config" "peering_routes" {
-  peering = google_service_networking_connection.servicenetworking.peering
-  network = google_compute_network.llm-vpc.name
-
-  import_custom_routes = true
-  export_custom_routes = true
-  depends_on = [
-    google_compute_network.llm-vpc
-  ]
-}
-
 resource "google_vpc_access_connector" "connector" {
   name          = "vpcconnector"
   ip_cidr_range = "10.8.200.0/28"
   network       = google_compute_network.llm-vpc.id
-  region        = var.google_default_region
+  region        = var.gcp_region
 }
-

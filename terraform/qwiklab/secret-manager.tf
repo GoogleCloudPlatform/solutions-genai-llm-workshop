@@ -15,7 +15,7 @@
 module "secret-manager" {
   source     = "GoogleCloudPlatform/secret-manager/google"
   version    = "~> 0.1"
-  project_id = var.google_project_id
+  project_id = var.gcp_project_id
   secrets = [
     {
       name                  = "pgvector-password"

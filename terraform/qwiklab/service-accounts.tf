@@ -20,12 +20,12 @@ locals {
 resource "google_project_service_identity" "dialogflow_serviceAgent" {
   provider = google-beta
 
-  project = var.google_project_id
+  project = var.gcp_project_id
   service = "dialogflow.googleapis.com"
 }
 
 resource "google_project_iam_member" "pubsub_service_account_roles" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     "roles/iam.serviceAccountTokenCreator",
     "roles/bigquery.dataEditor"
@@ -38,7 +38,7 @@ resource "google_project_iam_member" "pubsub_service_account_roles" {
 }
 
 resource "google_project_iam_member" "dialogflow_service_account_roles" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     "roles/bigquery.dataEditor"
   ])
@@ -51,7 +51,7 @@ resource "google_project_iam_member" "dialogflow_service_account_roles" {
 }
 
 resource "google_project_iam_member" "default_compute_engine_service_account" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     "roles/cloudfunctions.invoker"
   ])
@@ -63,7 +63,7 @@ resource "google_project_iam_member" "default_compute_engine_service_account" {
 }
 
 resource "google_project_iam_member" "bucket_upload_trigger" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     # Invoke Generative AI services
     "roles/aiplatform.user",
@@ -87,7 +87,7 @@ resource "google_project_iam_member" "bucket_upload_trigger" {
     "roles/secretmanager.secretAccessor",
   ])
   role   = each.key
-  member = "serviceAccount:${var.google_project_id}@appspot.gserviceaccount.com"
+  member = "serviceAccount:${var.gcp_project_id}@appspot.gserviceaccount.com"
   depends_on = [
     google_project_service.google-cloud-apis,
   ]
@@ -95,7 +95,7 @@ resource "google_project_iam_member" "bucket_upload_trigger" {
 
 # https://cloud.google.com/eventarc/docs/run/create-trigger-storage-gcloud#before-you-begin
 resource "google_project_iam_member" "bucket_upload_trigger_eventReceiver" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     "roles/eventarc.eventReceiver",
     "roles/run.invoker",
@@ -112,7 +112,7 @@ resource "google_project_iam_member" "bucket_upload_trigger_eventReceiver" {
 # https://cloud.google.com/eventarc/docs/run/create-trigger-storage-gcloud#before-you-begin
 resource "google_project_service_identity" "storage_service_agent" {
   provider = google-beta
-  project  = var.google_project_id
+  project  = var.gcp_project_id
   service  = "storage.googleapis.com"
   depends_on = [
     google_project_service.google-cloud-apis
@@ -120,7 +120,7 @@ resource "google_project_service_identity" "storage_service_agent" {
 }
 
 resource "google_project_iam_member" "bucket_upload_trigger_publisher" {
-  project = var.google_project_id
+  project = var.gcp_project_id
   for_each = toset([
     "roles/pubsub.publisher",
   ])
