@@ -24,7 +24,7 @@ from langchain.vectorstores import FAISS
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 
 REQUESTS_PER_MINUTE = 30
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
@@ -46,7 +46,7 @@ documents = loader.load()
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 documents = text_splitter.split_documents(documents)
 
-embeddings = MyVertexAIEmbedding()
+embeddings = VertexAIEmbeddings()
 
 # Insert the file to FAISS and  create a VectorStore client
 print("FAISS.from_documents()...")

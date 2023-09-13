@@ -12,50 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "google_project_service_identity" "dialogflow_serviceAgent" {
-  provider = google-beta
+# resource "google_project_service_identity" "dialogflow_serviceAgent" {
+#   provider = google-beta
 
-  project = var.gcp_project_id
-  service = "dialogflow.googleapis.com"
-}
+#   project = var.gcp_project_id
+#   service = "dialogflow.googleapis.com"
+# }
 
-# resource "google_project_iam_member" "pubsub_service_account_roles" {
+# resource "google_project_iam_member" "dialogflow_service_account_roles" {
 #   project = var.gcp_project_id
 #   for_each = toset([
-#     "roles/iam.serviceAccountTokenCreator",
 #     "roles/bigquery.dataEditor"
 #   ])
 #   role   = each.key
-#   member = "serviceAccount:${local.pubsub_svc_account_email}"
-#   depends_on = [
-#     google_project_service.google-cloud-apis
-#   ]
-# }
-
-resource "google_project_iam_member" "dialogflow_service_account_roles" {
-  project = var.gcp_project_id
-  for_each = toset([
-    "roles/bigquery.dataEditor"
-  ])
-  role   = each.key
-  member = "serviceAccount:${google_project_service_identity.dialogflow_serviceAgent.email}"
-  depends_on = [
-    google_project_service.google-cloud-apis,
-    google_project_service_identity.dialogflow_serviceAgent
-  ]
-}
-
-# resource "google_project_iam_member" "default_compute_engine_service_account" {
-#   project = var.gcp_project_id
-#   for_each = toset([
-#     "roles/cloudfunctions.invoker"
-#   ])
-#   role   = each.key
-#   member = "serviceAccount:${local.default_compute_engine_svc_account_email}"
+#   member = "serviceAccount:${google_project_service_identity.dialogflow_serviceAgent.email}"
 #   depends_on = [
 #     google_project_service.google-cloud-apis,
+#     google_project_service_identity.dialogflow_serviceAgent
 #   ]
 # }
+
+locals {
+  default_compute_engine_svc_account_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+}
+
+resource "google_service_account" "app_service_account" {
+  account_id   = "app-service-account"
+  display_name = "Application Service Account"
+}
 
 resource "google_project_iam_member" "bucket_upload_trigger" {
   project = var.gcp_project_id

@@ -13,10 +13,12 @@
 # limitations under the License.
 
 output "database_private_ip_address" {
+  description = "Cloud SQL Private IP Address"
   value = google_sql_database_instance.postgresql.private_ip_address
 }
 
 output "database_public_ip_address" {
+  description = "Cloud SQL Public IP Address"
   value = google_sql_database_instance.postgresql.public_ip_address
 }
 
@@ -36,9 +38,16 @@ output "database_password_key" {
 }
 
 output "google-project-id" {
+  description = "Google Cloud Porject ID"
   value = var.gcp_project_id
 }
 
 output "google-default-region" {
+  description = "Default Google Cloud Region"
   value = var.gcp_zone
+}
+
+output "gcs_documents_storage_url" {
+  description = "Document Store GCS Bucket URL"
+  value = module.gcs_documents_storage.url
 }

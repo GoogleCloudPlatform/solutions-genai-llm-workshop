@@ -51,29 +51,18 @@ module "gcs_documents_storage" {
   }
 }
 
-data "archive_file" "index_document" {
-  type        = "zip"
-  source_dir  = "${path.module}/files/webhooks/index_document/"
-  output_path = "/tmp/index_document.zip"
-}
+# data "archive_file" "index_document" {
+#   type        = "zip"
+#   source_dir  = "${path.module}/files/webhooks/index_document/"
+#   output_path = "/tmp/index_document.zip"
+# }
 
-resource "google_storage_bucket_object" "index_document" {
-  name   = "index_document.zip"
-  bucket = module.gcs.name
-  source = "/tmp/index_document.zip"
-  depends_on = [
-    module.gcs,
-    data.archive_file.index_document
-  ]
-}
-
-resource "google_storage_bucket" "embeddings" {
-  name          = "${var.gcp_project_id}-embeddings"
-  location      = var.gcp_region
-  storage_class = "STANDARD"
-
-  uniform_bucket_level_access = true
-  depends_on = [
-    google_project_service.google-cloud-apis
-  ]
-}
+# resource "google_storage_bucket_object" "index_document" {
+#   name   = "index_document.zip"
+#   bucket = module.gcs.name
+#   source = "/tmp/index_document.zip"
+#   depends_on = [
+#     module.gcs,
+#     data.archive_file.index_document
+#   ]
+# }

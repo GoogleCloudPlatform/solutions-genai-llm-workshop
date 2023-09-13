@@ -37,9 +37,8 @@ embeddings = VertexAIEmbeddings()
 index_name = "state_of_union"
 
 PDF_FILE = f"../dataset/unstructured/{index_name}.txt"
-loader = TextLoader(f"../dataset/unstructured/{index_name}.txt")
+loader = TextLoader(PDF_FILE)
 documents = loader.load()
-
 
 index = VectorstoreIndexCreator(
     text_splitter=CharacterTextSplitter(chunk_size=1000, chunk_overlap=10),
@@ -48,5 +47,5 @@ index = VectorstoreIndexCreator(
 ).from_loaders([loader])
 
 query = "What did the president say about Justice Breyer"
-result = index.query(query, llm=llm, chain_type="refine")
+result = index.query(query, llm=llm, chain_type="stuff")
 print(result)

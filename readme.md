@@ -9,8 +9,6 @@ This is part of the JAPAC Generative AI Technical Workshop qwiklabs. The worksho
 
 1. Configure Google Cloud Environment
 
-    If you are running the lab in Qwiklabs environment, you can skip step 2.
-
 To manually configure the Google Cloud project:
 
 Ensure the following services are enabled in your GCP Project:
@@ -21,12 +19,18 @@ Ensure the following services are enabled in your GCP Project:
 
     * Identity and Access Management (IAM) API
 
+Ensure the GCP project does not retricted by the following Organization Policies:
+
+    * constraints/compute.requireShieldedVm
+
+    * constraints/compute.vmExternalIpAccess
+
 2. Use Terraform to create and configure required resources.
 
-- Goto `terraform/qwiklabs` folder.
+- Goto `terraform/workbench` folder.
 
     ```shell
-    cd terraform/qwiklabs
+    cd terraform/workbench
     ```
 
 - create `terraform.tfvars` file with the following content

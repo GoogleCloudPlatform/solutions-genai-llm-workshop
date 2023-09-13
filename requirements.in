@@ -48,6 +48,7 @@ types-requests
 types-protobuf
 
 # SQL Agent
+flask-sqlalchemy
 SQLAlchemy
 sqlalchemy-bigquery
 python-bigquery-validator
@@ -59,7 +60,6 @@ cryptography>=41.0.3
 # Secret Manager
 google-api-python-client
 cloud-sql-python-connector[pg8000]
-pgvector
+# psycopg2
 psycopg2-binary
-psycopg2
 google-cloud-secret-manager
