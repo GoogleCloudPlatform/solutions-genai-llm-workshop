@@ -24,16 +24,16 @@ from langchain.vectorstores import FAISS
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 
 llm = VertexAI(
     max_output_tokens=256,
-    temperature=0.2,
+    temperature=0,
     top_p=0.8,
     top_k=40,
     verbose=True,
 )
-embeddings = MyVertexAIEmbedding()
+embeddings = VertexAIEmbeddings()
 
 
 PDF_FILE = "../dataset/unstructured/state_of_union.txt"
@@ -41,7 +41,7 @@ loader = TextLoader(PDF_FILE)
 documents = loader.load_and_split()
 vectorstore = FAISS.from_documents(documents=documents, embedding=embeddings)
 
-doc_chain = load_qa_with_sources_chain(llm, chain_type="stuff", verbose=False)
+doc_chain = load_qa_with_sources_chain(llm, chain_type="stuff", verbose=True)
 qa = ConversationalRetrievalChain.from_llm(
     llm=llm, retriever=vectorstore.as_retriever()
 )
@@ -52,12 +52,12 @@ result = qa({"question": query, "chat_history": chat_history}, return_only_outpu
 print(result["answer"])
 chat_history = [(query, result["answer"])]
 
-query = "what did the president said about him ?"
+query = "what did the president said about him ? answer in English."
 result = qa({"question": query, "chat_history": chat_history}, return_only_outputs=True)
 print(result["answer"])
 chat_history.append((query, result["answer"]))
 
-query = "what does he do now ?"
+query = "what does he do now ? answer in English."
 result = qa({"question": query, "chat_history": chat_history}, return_only_outputs=True)
 print(result["answer"])
 chat_history.append((query, result["answer"]))

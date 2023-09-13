@@ -61,6 +61,17 @@ pool = sqlalchemy.create_engine(
     creator=getconn,
 )
 
+SQL = """
+SELECT e.extname AS "Name", e.extversion AS "Version", n.nspname AS "Schema", c.description AS "Description" 
+FROM pg_catalog.pg_extension e 
+LEFT JOIN pg_catalog.pg_namespace n ON n.oid = e.extnamespace 
+LEFT JOIN pg_catalog.pg_description c ON c.objoid = e.oid AND c.classoid = 'pg_catalog.pg_extension'::pg_catalog.regclass 
+ORDER BY 1;
+"""
 with pool.connect() as db_conn:
     db_conn.execute(sqlalchemy.text("CREATE EXTENSION IF NOT EXISTS vector;"))
+    db_conn.commit()
+    results = db_conn.execute(sqlalchemy.text(SQL))
+    result = [r[0] for r in results]
+    print(result)
     db_conn.commit()

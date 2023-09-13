@@ -24,7 +24,7 @@ from langchain.vectorstores import FAISS
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 
 llm = VertexAI(
     max_output_tokens=256,
@@ -33,7 +33,7 @@ llm = VertexAI(
     top_k=40,
     verbose=True,
 )
-embeddings = MyVertexAIEmbedding()
+embeddings = VertexAIEmbeddings()
 
 
 PDF_FILE = "../dataset/unstructured/state_of_union.txt"
@@ -52,10 +52,10 @@ query = "who is Justice Breyer"
 result = qa({"question": query}, return_only_outputs=True)
 print(result["answer"])
 
-query = "what did the president said about him ?"
+query = "what did the president said about him ? answer in English"
 result = qa({"question": query}, return_only_outputs=True)
 print(result["answer"])
 
-query = "what does he do now ?"
+query = "what does he do now ? answer in English"
 result = qa({"question": query}, return_only_outputs=True)
 print(result["answer"])

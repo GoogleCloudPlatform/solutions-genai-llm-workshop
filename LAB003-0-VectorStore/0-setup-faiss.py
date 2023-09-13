@@ -21,7 +21,7 @@ from langchain.vectorstores import FAISS
 script_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(script_dir, "../modules"))
 
-from MyVertexAIEmbedding import MyVertexAIEmbedding  # noqa: E402
+from langchain.embeddings.vertexai import VertexAIEmbeddings  # noqa: E402
 
 
 def save_local_index(index_name: str) -> None:
@@ -30,7 +30,7 @@ def save_local_index(index_name: str) -> None:
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=0)
     doc_splits = text_splitter.split_documents(documents)
-    embeddings = MyVertexAIEmbedding()
+    embeddings = VertexAIEmbeddings()
 
     print("FAISS.from_documents()...")
     vectorstore = FAISS.from_documents(doc_splits, embeddings)

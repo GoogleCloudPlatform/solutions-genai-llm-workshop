@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# locals {
-#   pubsub_svc_account_email                 = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
-#   default_compute_engine_svc_account_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
-# }
-
 resource "google_project_service_identity" "dialogflow_serviceAgent" {
   provider = google-beta
 

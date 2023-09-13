@@ -1,4 +1,4 @@
-langchain==0.0.259
+langchain
 transformers
 pandas
 datasets
@@ -27,7 +27,7 @@ tabulate
 db-dtypes
 
 # Workshop Lab022
-google-cloud-aiplatform==1.26.0
+google-cloud-aiplatform==1.32.0
 shapely<2.0.
 protobuf
 tensorflow_hub
@@ -35,7 +35,7 @@ tensorflow_text
 
 # Selenium URL Loader
 selenium
-unstructured
+unstructured[all-docs]
 
 # Web Loader
 bs4
@@ -47,11 +47,18 @@ types-requests
 types-protobuf
 
 # SQL Agent
-
-SQLAlchemy==1.4.48
+SQLAlchemy
 sqlalchemy-bigquery
 python-bigquery-validator
 
 certifi>=2023.07.22
 aiohttp>=3.8.5
 cryptography>=41.0.3
+
+# Secret Manager
+google-api-python-client
+cloud-sql-python-connector[pg8000]
+pgvector
+psycopg2-binary
+psycopg2
+google-cloud-secret-manager

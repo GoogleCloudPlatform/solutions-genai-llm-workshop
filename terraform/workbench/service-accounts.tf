@@ -13,7 +13,6 @@
 # limitations under the License.
 
 locals {
-  pubsub_svc_account_email                 = "service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
   default_compute_engine_svc_account_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
@@ -36,7 +35,7 @@ resource "google_project_iam_member" "pubsub_service_account_roles" {
     "roles/bigquery.dataEditor"
   ])
   role   = each.key
-  member = "serviceAccount:${local.pubsub_svc_account_email}"
+  member = "serviceAccount:${google_project_service_identity.dialogflow_serviceAgent.email}"
   depends_on = [
     google_project_service.google-cloud-apis
   ]
@@ -107,7 +106,7 @@ resource "google_project_iam_member" "bucket_upload_trigger_eventReceiver" {
     "roles/cloudfunctions.invoker",
   ])
   role   = each.key
-  member = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  member = "serviceAccount:${google_service_account.app_service_account.email}"
   depends_on = [
     google_project_service.google-cloud-apis,
   ]

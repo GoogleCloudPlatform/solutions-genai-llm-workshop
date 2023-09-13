@@ -1,7 +1,16 @@
+# Python3 Temps
 __pycache__/
+__*
 *.whl
+.venv
+
+# Lab dataset
+dataset/*
+vectorstore/
+*.zip
+
+# Terraform
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
 .terraform.lock.hcl
-*.zip
