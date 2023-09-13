@@ -1,0 +1,11 @@
+functions-framework==3.*
+langchain==0.0.259
+google-api-python-client==2.86.0
+google-cloud-aiplatform==1.26.1
+cloud-sql-python-connector[pg8000]
+SQLAlchemy==2.0.7
+pgvector
+psycopg2
+unstructured[all-docs]
+pypdf
+# google-cloud-secret-manager

@@ -51,25 +51,9 @@ module "gcs_documents_storage" {
   }
 }
 
-data "archive_file" "webui" {
-  type        = "zip"
-  source_dir  = "${path.module}/../webui/"
-  output_path = "/tmp/webui.zip"
-}
-
-resource "google_storage_bucket_object" "webui" {
-  name   = "webui.zip"
-  bucket = module.gcs.name
-  source = "/tmp/webui.zip"
-  depends_on = [
-    module.gcs,
-    data.archive_file.webui
-  ]
-}
-
 data "archive_file" "index_document" {
   type        = "zip"
-  source_dir  = "${path.module}/../webhooks/index_document/"
+  source_dir  = "${path.module}/files/webhooks/index_document/"
   output_path = "/tmp/index_document.zip"
 }
 
