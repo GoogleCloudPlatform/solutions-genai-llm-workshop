@@ -64,6 +64,6 @@ output = ask_bq("what's the top 10 block, type by crime activities")
 
 print(
     f"""
-result:{result}
+result:{output}
 """
 )
