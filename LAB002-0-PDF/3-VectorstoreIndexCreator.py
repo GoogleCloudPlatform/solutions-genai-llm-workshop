@@ -15,7 +15,7 @@ import os
 import sys
 
 from langchain.document_loaders import TextLoader
-from langchain.indexes import VectorstoreIndexCreator
+from langchain.indexes.vectorstore import VectorstoreIndexCreator
 from langchain.llms import VertexAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
