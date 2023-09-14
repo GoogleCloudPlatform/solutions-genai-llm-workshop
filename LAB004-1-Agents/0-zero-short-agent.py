@@ -11,9 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List, Union
+
 from langchain import SerpAPIWrapper
 from langchain.agents import AgentType, Tool, initialize_agent
 from langchain.llms.vertexai import VertexAI
+from langchain.schema import AgentAction, AgentFinish
+
+
+def _handle_error(error) -> str:
+    msg = str(error)
+    if "So the final answer is:" in msg:
+        return "So the final answer is:" + msg.split(":")[-1]
 
 """
 Create Vertex LLM
@@ -28,13 +37,15 @@ search = SerpAPIWrapper()
 tools = [
     Tool(
         verbose=True,
-        name="Intermediate Answer",
+        name="Search",
         func=search.run,
         description="useful for when you need to ask with search",
     )
 ]
+
 agent_executor = initialize_agent(
-    tools, llm, agent=AgentType.SELF_ASK_WITH_SEARCH, verbose=True
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True,
+    handle_parsing_errors=_handle_error,
 )
 result = agent_executor.run("how many people live in Taipei City ?")
 print(result)
