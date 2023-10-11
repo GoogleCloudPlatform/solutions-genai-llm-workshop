@@ -27,7 +27,7 @@ tabulate
 db-dtypes
 
 # Workshop Lab022
-google-cloud-aiplatform==1.26.0
+google-cloud-aiplatform==1.28.1
 shapely<2.0.
 protobuf
 tensorflow_hub
