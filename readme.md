@@ -5,32 +5,52 @@ This is part of the JAPAC Generative AI Technical Workshop qwiklabs. The worksho
 * Google Generative AI Language offerings
 * Langchain integration
 
-## Environment Setup
+## Provision Cloud Resources
 
 1. Configure Google Cloud Environment
 
-If you are running the lab in Qwiklabs environment, you do not have to manually configure the Google Project.
+    If you are running the lab in Qwiklabs environment, you can skip step 2.
 
 To manually configure the Google Cloud project:
 
 2. Use Terraform to create and configure required resources.
 
-```shell
-cd terraform/qwiklabs
+- Goto `terraform/qwiklabs` folder.
 
-terraform init
-terraform plan
-terraform apply
-```
+    ```shell
+    cd terraform/qwiklabs
+    ```
 
-This will create the following resources:
-    1. A VPC with firewall rules which allows 80, 8080, 23 TCP inbound traffics.
-    2. Service Network peering with the VPC.
-    3. A GCE VM that runs in the VPC created previously.
+- create `terraform.tfvars` file with the following content
 
-3. ssh to the newly created GVE VM instance and clone the repository.
-4. Switch to llm-workshop folder and open `1-setup-vm.sh`
-5. Update the following line, replace the project id with your own project id.
+    ```ini
+    gcp_project_id = <YOUR GCP PROJECT ID>
+    gcp_region = <DEFAULT GCP PROJECT ID> 
+    gcp_zone = <DEFAULT GCP PROJECT ID> 
+    ```
+
+- Apply terraform to privision Google Cloud Resources.
+
+    ```shell
+    terraform init
+    terraform plan -var-file=terraform.tfvars
+    terraform apply -var-file=terraform.tfvars
+    ```
+
+    This will create the following resources:
+        1. A VPC with firewall rules which allows 80, 8080, 23 TCP inbound traffics.
+        2. Service Network peering with the VPC.
+
+At this point, you have provisioned required cloud resources.
+
+## Create Vertex AI Workbench as the lab environment.
+
+In this lab, we use Vertex AI Workbench as the lab environment.
+
+1. Follow the [instruction](https://cloud.google.com/vertex-ai/docs/workbench/instances/create-console-quickstart) to provision Vertex AI Workbench Instance.
+
+2. Once the Workbench instance is created. Open the notebook and 
+
 ```shell
 export GOOGLE_PROJECT_ID=<YOUR PROJECT ID>
 ```
